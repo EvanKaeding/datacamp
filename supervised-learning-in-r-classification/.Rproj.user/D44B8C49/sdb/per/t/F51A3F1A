@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# Naive Bayes predictions\n\ndownload.file(url = \"https://assets.datacamp.com/production/course_2906/datasets/locations.csv\", \n                          destfile = \"bretts-location.csv\", method = \"curl\")\nwhere9am <- read.csv(file = \"bretts-location.csv\", stringsAsFactors = TRUE)\n\n# Doing a basic predicated prediction\n\n# Compute P(A) \np_A <- nrow(subset(where9am, location == \"office\"))/nrow(where9am)\n\n# Compute P(B)\np_B <- nrow(subset(where9am, daytype == \"weekday\"))/nrow(where9am)\n\n# Compute the observed P(A and B)\np_AB <- nrow(subset(where9am, location == \"office\", daytype == \"weekday\"))/nrow(where9am)\n\n# Compute P(A | B)\np_A_given_B <- p_AB/p_B\nprint(p_A_given_B)\n\n## Using the Naivebays package to build a model (NOT AVAILABLE FOR R 3.3)\n\n# Load the naivebayes package\nlibrary(e1071)\n\n# Build the location prediction model\nlocmodel <- naive_bayes(location ~ daytype, data = where9am)\n\n# Predict Thursday's 9am location\npredict(locmodel, newdata = data.frame(daytype = as.factor(\"weekday\")))\n\n# Predict Saturdays's 9am location\npredict(locmodel, data.frame(daytype = as.factor(\"weekend\")))\n\n## Hashing out some of these probs\n\n# The 'naivebayes' package is loaded into the workspace\n# and the Naive Bayes 'locmodel' has been built\n\n# Examine the location prediction model\nprint(locmodel)\n\n# Obtain the predicted probabilities for Thursday at 9am\npredict(locmodel, newdata = thursday9am , type = \"prob\")\n\n# Obtain the predicted probabilities for Saturday at 9am\npredict(locmodel, newdata = saturday9am , type = \"prob\")\n\n## Building a multi-feature bayes model\n\n# Build a NB model of location\nlocmodel <- naive_bayes(location ~ daytype + hourtype, data = locations)\n\n# Predict Brett's location on a weekday afternoon\npredict(locmodel, data.frame(daytype = \"weekday\", hourtype = \"afternoon\"))\n\n# Predict Brett's location on a weekday evening\npredict(locmodel, weekday_evening)\n\n## Adding the Laplace correction\n\n# Observe the predicted probabilities for a weekend afternoon\npredict(locmodel, weekend_afternoon, type = \"prob\")\n\n\n# Build a new model using the Laplace correction\nlocmodel2 <- naive_bayes(location ~ daytype + hourtype, \n                         data = locations, laplace = 1)\n\n# Observe the new predicted probabilities for a weekend afternoon\n\npredict(locmodel2, weekend_afternoon, type = \"prob\")\n\n\n",
+    "created" : 1511654864286.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3855100629",
+    "id" : "F51A3F1A",
+    "lastKnownWriteTime" : 1511795911,
+    "last_content_update" : 1511795911432,
+    "path" : "~/Projects/datacamp/supervised-learning-in-r/naive-bayes-prediction.R",
+    "project_path" : "naive-bayes-prediction.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

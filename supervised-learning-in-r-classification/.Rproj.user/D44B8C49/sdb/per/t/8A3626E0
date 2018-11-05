@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# Load the 'class' package - NOTE - df next_sign is provided in the workshop\nlibrary(class)\n\n# Create a vector of labels\nsign_types <- signs$sign_type\n\n# Classify the next sign observed\nknn(train = signs[-1], test = next_sign, cl = sign_types)\n\n# The arguments to the knn function are the training data, the test data, and\n# a factor of the TRUE classifications of the training set\n\n# Examine the structure of the signs dataset\nstr(signs)\n\n# Count the number of signs of each type\ntable(signs$sign_type)\n\n# Check r10's average red level by sign type\naggregate(r10 ~ sign_type, data = signs, mean)\n\n#Use kNN to identify the test road signs\n> sign_types <- signs$sign_type\n> signs_pred <- knn(train = signs[-1], test = test_signs[-1], cl = sign_types)\n> \n        > # Create a confusion matrix of the actual versus predicted values\n        > signs_actual <- test_signs$sign_type\n> table(signs_pred, signs_actual)\nsigns_actual\nsigns_pred   pedestrian speed stop\npedestrian         19     2    0\nspeed               0    17    0\nstop                0     2   19\n> \n        > # Compute the accuracy\n        > mean(signs_pred == signs_actual)\n[1] 0.9322034\n> # Use kNN to identify the test road signs\n        > sign_types <- signs$sign_type\n> signs_pred <- knn(train = signs[-1], test = test_signs[-1], cl = sign_types)\n> \n        > # Create a confusion matrix of the actual versus predicted values\n        > signs_actual <- test_signs$sign_type\n> table(signs_pred, signs_actual)\nsigns_actual\nsigns_pred   pedestrian speed stop\npedestrian         19     2    0\nspeed               0    17    0\nstop                0     2   19\n> \n        > # Compute the accuracy\n        > mean(signs_pred == signs_actual)\n[1] 0.9322034\n> \n        \n# Compute the accuracy of the baseline model (default k = 1)\nk_1 <- knn(train = signs[-1], test = signs_test[-1], cl = sign_types)\nmean(k_1 == signs_actual)\n\n# Modify the above to set k = 7\nk_7 <- knn(train = signs[-1], test = signs_test[-1], cl = sign_types, k = 7)\nmean(k_7 == signs_actual)\n\n# Set k = 15 and compare to the above\nk_15 <- knn(train = signs[-1], test = signs_test[-1], cl = sign_types, k = 15)\nmean(k_15 == signs_actual)\n\n# Use the prob parameter to get the proportion of votes for the winning class\nsign_pred <- knn(train = signs[-1], test = signs_test[-1], cl = sign_types, k = 7, prob = TRUE)\n\n# Get the \"prob\" attribute from the predicted classes\nsign_prob <- attr(sign_pred, \"prob\")\n\n# Examine the first several predictions\nhead(sign_prob)\n\n# Examine the proportion of votes for the winning class\nhead(sign_pred)\n\n# define a min-max normalize() function\nnormalize <- function(x) {\n        return((x - min(x)) / (max(x) - min(x)))\n}\n",
+    "created" : 1511644446951.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1352262240",
+    "id" : "8A3626E0",
+    "lastKnownWriteTime" : 1511654299,
+    "last_content_update" : 1511654299916,
+    "path" : "~/Projects/datacamp/supervised-learning-in-r/first-knn-classifier.R",
+    "project_path" : "first-knn-classifier.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
