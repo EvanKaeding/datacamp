@@ -1,5 +1,14 @@
 ## Pandas
 
+import pandas as pd
+import io
+import requests
+
+url = "https://assets.datacamp.com/production/repositories/1361/datasets/5496a658cc7ea792ee295d61937f8b12659884ff/tips.csv"
+
+s = requests.get(url).content
+tips = pd.read_csv(io.StringIO(s.decode('utf-8')))
+
 # Print the tip column using dot notation
 print(tips.tip)
 
